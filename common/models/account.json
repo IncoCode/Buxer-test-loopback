@@ -9,14 +9,16 @@
     "Name": {
       "type": "string",
       "required": true
-    },
-    "Currency": {
-      "type": "object",
-      "required": true
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "currency": {
+      "type": "belongsTo",
+      "model": "Currency",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": []
 }
