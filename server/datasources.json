@@ -4,12 +4,12 @@
     "connector": "memory"
   },
   "Mongo-Test": {
-    "name": "Mongo-Test",
-    "connector": "mongodb",
     "host": "127.0.0.1",
+    "port": 27017,
     "database": "mongo-test",
     "username": "",
     "password": "",
-    "port": 27017
+    "name": "Mongo-Test",
+    "connector": "mongodb"
   }
 }
