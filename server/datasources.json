@@ -5,6 +5,11 @@
   },
   "Mongo-Test": {
     "name": "Mongo-Test",
-    "connector": "mongodb"
+    "connector": "mongodb",
+    "host": "127.0.0.1",
+    "database": "mongo-test",
+    "username": "",
+    "password": "",
+    "port": 27017
   }
 }
