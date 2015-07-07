@@ -17,6 +17,11 @@
       "type": "belongsTo",
       "model": "Currency",
       "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": ""
     }
   },
   "acls": [],
