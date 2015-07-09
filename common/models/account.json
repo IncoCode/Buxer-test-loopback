@@ -22,6 +22,11 @@
       "type": "belongsTo",
       "model": "MyUser",
       "foreignKey": ""
+    },
+    "transactions": {
+      "type": "hasMany",
+      "model": "Transaction",
+      "foreignKey": ""
     }
   },
   "acls": [

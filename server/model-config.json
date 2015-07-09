@@ -44,5 +44,9 @@
   "MyUser": {
     "dataSource": "Mongo-Test",
     "public": true
+  },
+  "Transaction": {
+    "dataSource": "Mongo-Test",
+    "public": true
   }
 }
