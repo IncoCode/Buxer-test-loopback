@@ -48,5 +48,9 @@
   "Transaction": {
     "dataSource": "Mongo-Test",
     "public": true
+  },
+  "Budget": {
+    "dataSource": "Mongo-Test",
+    "public": true
   }
 }
