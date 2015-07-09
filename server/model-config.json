@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "Mongo-Test",
-    "public": true
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -38,6 +38,10 @@
     "public": true
   },
   "Account": {
+    "dataSource": "Mongo-Test",
+    "public": true
+  },
+  "MyUser": {
     "dataSource": "Mongo-Test",
     "public": true
   }
