@@ -1,5 +1,5 @@
 {
-  "name": "Buxer",
+  "name": "buxer-test-loopback",
   "version": "1.0.0",
   "main": "server/server.js",
   "scripts": {
@@ -13,7 +13,9 @@
     "loopback-boot": "^2.6.5",
     "loopback-connector-mongodb": "^1.11.3",
     "loopback-datasource-juggler": "^2.19.0",
-    "serve-favicon": "^2.0.1"
+    "serve-favicon": "^2.0.1",
+    "underscore": "^1.8.3",
+    "bluebird": "^2.9.33"
   },
   "optionalDependencies": {
     "loopback-explorer": "^1.1.0"
