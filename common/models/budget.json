@@ -45,14 +45,14 @@
     {
       "accessType": "WRITE",
       "principalType": "ROLE",
-      "principalId": "$owner",
+      "principalId": "$authenticated",
       "permission": "ALLOW"
     },
     {
-      "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW"
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "getUserBudget"
     }
   ],
   "methods": []
