@@ -4,6 +4,10 @@ var app = require('../server');
 var assert = require('assert');
 var User = require('./fixtures/MyUser.json');
 
+var authUser;
+var currencyId;
+var account;
+
 //before(function importSampleData(done) {
 //  this.timeout(50000);
 //
@@ -38,6 +42,39 @@ describe('MyUser', function () {
       .expect(200)
       .end(function (err, data) {
         assert(!!data.body.userId);
+
+        authUser = data.body;
+
+        done();
+      });
+  });
+
+  it('should create new curency', function (done) {
+    json('post', ['/api/Currencies/', '?access_token=', authUser.id].join(''))
+      .send({
+        Name: 'UAH'
+      })
+      .expect(200)
+      .end(function (err, data) {
+        assert(!!data.body.id);
+
+        currencyId = data.body.id;
+
+        done();
+      });
+  });
+
+  it('should create new account for test user', function (done) {
+    json('post', ['/api/MyUsers/', authUser.userId, '/accounts/?access_token=', authUser.id].join(''))
+      .send({
+        Name: 'Cash',
+        currencyId: currencyId
+      })
+      .expect(200)
+      .end(function (err, data) {
+        assert(!!data.body.id);
+
+        account = data.body;
 
         done();
       });
