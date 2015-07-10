@@ -15,6 +15,15 @@ module.exports = function (Budget) {
         break;
     }
     return (dayStep * daysPeriod).toFixed(2);
+  };
+
+  function isSpendingLimitValid(err) {
+    if (this.SpendingLimit < 0) {
+      err();
+    }
   }
+
+  Budget.validatesInclusionOf('Period', {in: ['week', 'month', 'year']});
+  Budget.validate('SpendingLimit', isSpendingLimitValid, {message: 'SpendingLimit should be greater zero!'});
 
 };
