@@ -12,6 +12,11 @@
       "type": "hasMany",
       "model": "Account",
       "foreignKey": ""
+    },
+    "budgets": {
+      "type": "hasOne",
+      "model": "Budget",
+      "foreignKey": ""
     }
   },
   "acls": [
@@ -56,6 +61,42 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__updateById__accounts"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__budgets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__budgets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__delete__budgets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__budgets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__budgets"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__budgets"
     }
   ],
   "methods": []
