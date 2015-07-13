@@ -52,5 +52,9 @@
   "Budget": {
     "dataSource": "Mongo-Test",
     "public": true
+  },
+  "MyRole": {
+    "dataSource": "Mongo-Test",
+    "public": true
   }
 }
