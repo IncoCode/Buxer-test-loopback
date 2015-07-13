@@ -1,6 +1,6 @@
 module.exports = function (Transaction) {
   function isAmountValid(err) {
-    if (this.Amount < 1) err();
+    if (this.Amount < 0) err();
   }
 
   Transaction.validatesInclusionOf('Type', {in: ['income', 'expense']});
