@@ -3,11 +3,6 @@ var request = require('supertest');
 var app = require('../server');
 var assert = require('assert');
 var Promise = require('bluebird');
-//var chai = require('chai');
-//var assert = assert = chai.assert;
-//var should = chai.should();
-//var chaiAsPromised = require('chai-as-promised');
-//chai.use(chaiAsPromised);
 
 var User = require('./fixtures/MyUser.json');
 var Transactions = require('./fixtures/Transactions.json');
@@ -129,7 +124,7 @@ describe('MyUser', function () {
   });
 
 
-  it('budget test (period: 01.07.2015 - 30.07.2015)', function (done) {
+  it('budget stat test (period: 01.07.2015 - 30.07.2015)', function (done) {
     json('get', ['/api/Budgets/getUserBudget?userId=', authUser.userId, '&startDate=2015-07-01T00:00:00.000Z&endDate=2015-07-30T23:59:59.000Z&access_token=', authUser.id]
       .join(''))
       .expect(200)
