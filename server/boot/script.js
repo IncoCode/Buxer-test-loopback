@@ -1,10 +1,27 @@
 module.exports = function (app) {
+  function daysBetween(date1, date2) {
+    // get 1 day in milliseconds
+    var one_day = 1000 * 60 * 60 * 24;
+
+    // convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
+
+    // calculate the difference in milliseconds
+    var difference_ms = date2_ms - date1_ms;
+
+    // convert back to days and return
+    return Math.round(difference_ms / one_day);
+  }
+
   var Promise = require('bluebird');
   var _ = require('underscore');
 
   var Transaction = app.models.Transaction;
   var Account = app.models.Account;
   var Budget = app.models.Budget;
+  var MyRole = app.models.MyRole;
+  var RoleMapping = app.models.RoleMapping;
 
   Budget.getUserBudget = function (userId, startDate, endDate, cb) {
     if (!userId || !startDate || !endDate)
@@ -67,19 +84,13 @@ module.exports = function (app) {
     }
   );
 
-  function daysBetween(date1, date2) {
-    // get 1 day in milliseconds
-    var one_day = 1000 * 60 * 60 * 24;
-
-    // convert both dates to milliseconds
-    var date1_ms = date1.getTime();
-    var date2_ms = date2.getTime();
-
-    // calculate the difference in milliseconds
-    var difference_ms = date2_ms - date1_ms;
-
-    // convert back to days and return
-    return Math.round(difference_ms / one_day);
-  }
+  // creates admin role
+  MyRole
+    .findOne({where: {name: 'admin'}})
+    .then(function (role) {
+      if (!role) {
+        MyRole.create({name: 'admin'});
+      }
+    });
 
 };
