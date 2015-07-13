@@ -15,6 +15,7 @@ var Transactions = require('./fixtures/Transactions.json');
 var authUser;
 var currencyId;
 var account;
+var budget;
 
 //before(function importSampleData(done) {
 //  this.timeout(50000);
@@ -109,6 +110,22 @@ describe('MyUser', function () {
         done();
       })
       .catch(done);
+  });
+
+  it('should create new budget', function (done) {
+    json('post', ['/api/MyUsers/', authUser.userId, '/Budgets/?access_token=', authUser.id].join(''))
+      .send({
+        SpendingLimit: 1000,
+        Period: 'month'
+      })
+      .expect(200)
+      .end(function (err, data) {
+        assert(!!data.body.id);
+
+        budget = data.body;
+
+        done();
+      });
   });
 
 });
