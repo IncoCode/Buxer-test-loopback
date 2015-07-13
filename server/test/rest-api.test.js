@@ -2,7 +2,15 @@ process.env.NODE_ENV = 'test';
 var request = require('supertest');
 var app = require('../server');
 var assert = require('assert');
+var Promise = require('bluebird');
+//var chai = require('chai');
+//var assert = assert = chai.assert;
+//var should = chai.should();
+//var chaiAsPromised = require('chai-as-promised');
+//chai.use(chaiAsPromised);
+
 var User = require('./fixtures/MyUser.json');
+var Transactions = require('./fixtures/Transactions.json');
 
 var authUser;
 var currencyId;
@@ -78,6 +86,29 @@ describe('MyUser', function () {
 
         done();
       });
+  });
+
+  it('should create several transactions', function (done) {
+    Promise.map(Transactions, function (transaction) {
+      return new Promise(function (resolve, reject) {
+        json('post', ['/api/Accounts/', account.id, '/transactions/?access_token=', authUser.id].join(''))
+          .send(transaction)
+          .expect(200)
+          .end(function (err, data) {
+            if (!err && !!data.body.id) {
+              resolve(data.body);
+            }
+            else {
+              reject(err);
+            }
+          });
+      })
+
+    })
+      .then(function (data) {
+        done();
+      })
+      .catch(done);
   });
 
 });
