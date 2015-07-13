@@ -128,4 +128,18 @@ describe('MyUser', function () {
       });
   });
 
+
+  it('budget test (period: 01.07.2015 - 30.07.2015)', function (done) {
+    json('get', ['/api/Budgets/getUserBudget?userId=', authUser.userId, '&startDate=2015-07-01T00:00:00.000Z&endDate=2015-07-30T23:59:59.000Z&access_token=', authUser.id]
+      .join(''))
+      .expect(200)
+      .end(function (err, data) {
+        var budgetStat = data.body.Budget;
+
+        assert(!!budgetStat.id && budgetStat.Balance === 485 && budgetStat.Limit === 1000 && budgetStat.Expense === 515);
+
+        done();
+      });
+  });
+
 });
