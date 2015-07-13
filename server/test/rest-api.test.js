@@ -161,23 +161,29 @@ describe('MyUser', function () {
   });
 
   it('should fail creating faulty budgets', function (done) {
-    Promise.map(FaultyBudgets, function (budget) {
-      return new Promise(function (resolve, reject) {
-        json('post', ['/api/Accounts/', account.id, '/Budgets/?access_token=', authUser.id].join(''))
-          .send(budget)
-          .expect(200)
-          .end(function (err, data) {
-            resolve(data.body);
-          });
+    app.models.Budget
+      .destroyById(budget.id)
+      .then(function () {
+        return Promise.map(FaultyBudgets, function (budget) {
+          return new Promise(function (resolve, reject) {
+            json('post', ['/api/MyUsers/', account.id, '/budgets/?access_token=', authUser.id].join(''))
+              .send(budget)
+              .expect(200)
+              .end(function (err, data) {
+                resolve(data.body);
+              });
+          })
+        })
       })
-    })
       .then(function (data) {
         var faultyBudgetsRes = _.flatten(data);
-        assert(_.every(faultyBudgetsRes, function (t) {
-          return !!t.error;
-        }), "Not all promises were rejected!");
+        assert(_.every(faultyBudgetsRes, function (b) {
+          return !!b.error && b.error.stack.indexOf('ValidationError') >= 0;
+        }), "Not all budgets were rejected or an other error!");
+
+        done();
       })
-      .finally(done);
+      .catch(done)
   });
 
 });

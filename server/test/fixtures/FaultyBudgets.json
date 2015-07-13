@@ -1,0 +1,14 @@
+[
+  {
+    "SpendingLimit": -5,
+    "Period": "month"
+  },
+  {
+    "SpendingLimit": -5,
+    "Period": "wik"
+  },
+  {
+    "SpendingLimit": 1500,
+    "Period": "wiik"
+  }
+]
