@@ -111,7 +111,7 @@ describe('MyUser', function () {
   });
 
   it('should create new budget', function (done) {
-    json('post', ['/api/MyUsers/', authUser.userId, '/Budgets/?access_token=', authUser.id].join(''))
+    json('post', ['/api/MyUsers/', authUser.userId, '/budgets/?access_token=', authUser.id].join(''))
       .send({
         SpendingLimit: 1000,
         Period: 'month'
@@ -154,8 +154,8 @@ describe('MyUser', function () {
       .then(function (data) {
         var faultyTransactionsRes = _.flatten(data);
         assert(_.every(faultyTransactionsRes, function (t) {
-          return !!t.error;
-        }), "Not all promises were rejected!");
+          return !!t.error && t.error.stack.indexOf('ValidationError') >= 0;
+        }), "Not all transactions were rejected!");
       })
       .finally(done);
   });
