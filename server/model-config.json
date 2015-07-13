@@ -18,7 +18,7 @@
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "Mongo-Test",
     "public": false
   },
   "ACL": {
