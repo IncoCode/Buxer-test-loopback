@@ -57,7 +57,7 @@ describe('MyUser', function () {
       });
   });
 
-  it('should create new curency', function (done) {
+  it('should create new currency', function (done) {
     json('post', ['/api/Currencies/', '?access_token=', authUser.id].join(''))
       .send({
         Name: 'UAH'
