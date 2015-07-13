@@ -3,9 +3,12 @@ var request = require('supertest');
 var app = require('../server');
 var assert = require('assert');
 var Promise = require('bluebird');
+var _ = require('underscore');
 
 var User = require('./fixtures/MyUser.json');
 var Transactions = require('./fixtures/Transactions.json');
+var FaultyTransactions = require('./fixtures/FaultyTransactions.json');
+var FaultyBudgets = require('./fixtures/FaultyBudgets.json');
 
 var authUser;
 var currencyId;
@@ -135,6 +138,46 @@ describe('MyUser', function () {
 
         done();
       });
+  });
+
+  it('should fail creating faulty transactions', function (done) {
+    Promise.map(FaultyTransactions, function (transaction) {
+      return new Promise(function (resolve, reject) {
+        json('post', ['/api/Accounts/', account.id, '/transactions/?access_token=', authUser.id].join(''))
+          .send(transaction)
+          .expect(200)
+          .end(function (err, data) {
+            resolve(data.body);
+          });
+      })
+    })
+      .then(function (data) {
+        var faultyTransactionsRes = _.flatten(data);
+        assert(_.every(faultyTransactionsRes, function (t) {
+          return !!t.error;
+        }), "Not all promises were rejected!");
+      })
+      .finally(done);
+  });
+
+  it('should fail creating faulty budgets', function (done) {
+    Promise.map(FaultyBudgets, function (budget) {
+      return new Promise(function (resolve, reject) {
+        json('post', ['/api/Accounts/', account.id, '/Budgets/?access_token=', authUser.id].join(''))
+          .send(budget)
+          .expect(200)
+          .end(function (err, data) {
+            resolve(data.body);
+          });
+      })
+    })
+      .then(function (data) {
+        var faultyBudgetsRes = _.flatten(data);
+        assert(_.every(faultyBudgetsRes, function (t) {
+          return !!t.error;
+        }), "Not all promises were rejected!");
+      })
+      .finally(done);
   });
 
 });
