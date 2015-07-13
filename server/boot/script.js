@@ -16,23 +16,26 @@ module.exports = function (app) {
 
   var Promise = require('bluebird');
   var _ = require('underscore');
+  var loopback = require('loopback');
 
   var Transaction = app.models.Transaction;
   var Account = app.models.Account;
   var Budget = app.models.Budget;
   var MyRole = app.models.MyRole;
-  var RoleMapping = app.models.RoleMapping;
 
-  Budget.getUserBudget = function (userId, startDate, endDate, cb) {
-    if (!userId || !startDate || !endDate)
+  Budget.getUserBudget = function (startDate, endDate, cb) {
+    if (!startDate || !endDate)
       cb("Wrong params!");
 
     var budget;
     var startDateObj = new Date(startDate);
     var endDateObj = new Date(endDate);
 
+    var ctx = loopback.getCurrentContext();
+    var currentUser = ctx && ctx.get('currentUser');
+
     Budget
-      .findOne({where: {myUserId: userId}})
+      .findOne({where: {myUserId: currentUser.id}})
       .then(function (b) {
         if (!b)
           return Promise.reject("User not found or Budget for this user has not been created!");
@@ -78,7 +81,7 @@ module.exports = function (app) {
   Budget.remoteMethod(
     'getUserBudget',
     {
-      accepts: [{arg: 'userId', type: 'string'}, {arg: 'startDate', type: 'string'}, {arg: 'endDate', type: 'string'}],
+      accepts: [{arg: 'startDate', type: 'string'}, {arg: 'endDate', type: 'string'}],
       returns: {arg: 'Budget', type: 'object'},
       http: {path: '/getUserBudget', verb: 'get'}
     }
