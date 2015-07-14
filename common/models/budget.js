@@ -105,4 +105,19 @@ module.exports = function (Budget) {
       .catch(cb)
   };
 
+  Budget.observe('before save', function (ctx, next) {
+    if (ctx.instance) {
+      ctx.instance.Balance = 0;
+      ctx.instance.Limit = 0;
+      ctx.instance.Expense = 0;
+    }
+    else {
+      ctx.data.Balance = 0;
+      ctx.data.Limit = 0;
+      ctx.data.Expense = 0;
+    }
+
+    next();
+  });
+
 };
